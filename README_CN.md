@@ -1,256 +1,141 @@
-# WhisperApp.Avalonia - 跨平台音频转录应用
-
-一个基于 Avalonia UI 的跨平台音频转录桌面应用，可在 **Windows、macOS 和 Linux** 上运行。
-
-## ✨ 特点
-
-- 🌍 **跨平台**: Windows、macOS、Linux 全支持
-- 🎨 **现代界面**: 完全中文界面，简洁美观
-- 🎵 **多格式支持**: MP3、WAV、M4A、MP4 等
-- 📤 **自动上传**: 自动处理文件上传
-- ⏱️ **实时反馈**: 实时显示处理进度
-- 💾 **导出功能**: 保存为文本文件
-
-## 🖥️ 系统要求
-
-### Windows
-- Windows 10 或更高版本
-- .NET 9.0 Runtime
-
-### macOS
-- macOS 10.15 (Catalina) 或更高版本
-- .NET 9.0 Runtime
-- Apple Silicon (M1/M2/M3) 或 Intel
-
-### Linux
-- Ubuntu 20.04 或更高版本 (或其他现代 Linux 发行版)
-- .NET 9.0 Runtime
-
-## 🚀 快速开始
-
-### 运行应用
-
-#### Windows
-```bash
-dotnet run
-```
-
-#### macOS / Linux
-```bash
-dotnet run
-```
-
-### 使用步骤
-
-1. **获取 API 密钥**
-   - 访问：https://www.assemblyai.com/app/account
-   - 注册并复制 API 密钥
-
-2. **启动应用**
-   - 输入 API 密钥
-   - 点击"浏览..."选择音频文件
-   - 点击"开始转录"
-   - 等待完成
-   - 查看结果并导出
-
-## 📦 打包应用
-
-### 为 macOS 打包 (.app 应用包)
-
-```bash
-# 发布应用
-dotnet publish -c Release -r osx-x64 --self-contained
-
-# 或者为 Apple Silicon (M1/M2/M3) 打包
-dotnet publish -c Release -r osx-arm64 --self-contained
-```
-
-打包后的文件在: `bin/Release/net9.0/osx-x64/publish/`
-
-### 为 Linux 打包
-
-```bash
-# 发布应用
-dotnet publish -c Release -r linux-x64 --self-contained
-```
-
-### 为 Windows 打包
-
-```bash
-# 发布应用
-dotnet publish -c Release -r win-x64 --self-contained
-```
-
-## 🍎 在 macOS 上创建 .app 包
-
-创建应用包结构：
-
-```bash
-# 1. 发布应用
-dotnet publish -c Release -r osx-arm64 --self-contained
-
-# 2. 创建 .app 目录结构
-mkdir -p WhisperApp.app/Contents/MacOS
-mkdir -p WhisperApp.app/Contents/Resources
-
-# 3. 复制可执行文件
-cp -r bin/Release/net9.0/osx-arm64/publish/* WhisperApp.app/Contents/MacOS/
-
-# 4. 创建 Info.plist
-cat > WhisperApp.app/Contents/Info.plist << 'EOF'
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>CFBundleName</key>
-    <string>WhisperApp</string>
-    <key>CFBundleDisplayName</key>
-    <string>音频转录</string>
-    <key>CFBundleIdentifier</key>
-    <string>com.whisperapp.avalonia</string>
-    <key>CFBundleVersion</key>
-    <string>1.0</string>
-    <key>CFBundlePackageType</key>
-    <string>APPL</string>
-    <key>CFBundleExecutable</key>
-    <string>WhisperApp.Avalonia</string>
-    <key>LSMinimumSystemVersion</key>
-    <string>10.15</string>
-</dict>
-</plist>
-EOF
-
-# 5. 设置可执行权限
-chmod +x WhisperApp.app/Contents/MacOS/WhisperApp.Avalonia
-```
-
-现在可以双击 `WhisperApp.app` 运行了！
-
-## 🐧 在 Linux 上运行
-
-```bash
-# 发布
-dotnet publish -c Release -r linux-x64 --self-contained
-
-# 运行
-cd bin/Release/net9.0/linux-x64/publish/
-./WhisperApp.Avalonia
-```
-
-## 🏗️ 构建
-
-```bash
-# 还原依赖
-dotnet restore
-
-# 构建
-dotnet build
-
-# 发布（所有平台）
-dotnet publish -c Release
-```
-
-## 📝 支持的文件格式
-
-### 音频格式
-- MP3 (.mp3)
-- WAV (.wav)
-- M4A (.m4a)
-- FLAC (.flac)
-- OGG (.ogg)
-- OPUS (.opus)
-- WebM (.webm)
-
-### 视频格式
-- MP4 (.mp4)
-- AVI (.avi)
-- MOV (.mov)
-- MKV (.mkv)
-
-## 🔧 技术栈
-
-- **框架**: .NET 9.0
-- **UI**: Avalonia UI 11.3.6
-- **API**: AssemblyAI Speech-to-Text
-- **语言**: C# 12
-
-## 📚 与 WPF 版本的区别
-
-| 特性 | WPF 版本 | Avalonia 版本 |
-|------|----------|---------------|
-| Windows | ✅ | ✅ |
-| macOS | ❌ | ✅ |
-| Linux | ❌ | ✅ |
-| 界面 | Windows 原生 | 现代跨平台 |
-| 功能 | 完整 | 完整 |
-
-## 🎯 功能完整性
-
-Avalonia 版本保留了 WPF 版本的所有功能：
-
-- ✅ API 密钥配置
-- ✅ 文件选择
-- ✅ 音频转录
-- ✅ 实时进度
-- ✅ 结果显示
-- ✅ 文件导出
-- ✅ 取消操作
-- ✅ 错误处理
-- ✅ 中文界面
-
-## 🆘 故障排除
-
-### macOS: "无法打开应用，因为 Apple 无法验证其是否包含恶意软件"
-
-```bash
-# 允许运行未签名的应用
-xattr -cr WhisperApp.app
-
-# 或在系统偏好设置中允许
-```
-
-### Linux: 缺少依赖
-
-```bash
-# Ubuntu/Debian
-sudo apt-get install libx11-dev libice-dev libsm-dev
-
-# Fedora
-sudo dnf install libX11-devel libICE-devel libSM-devel
-```
-
-### 所有平台: .NET 运行时
-
-如果没有安装 .NET 9.0:
-- 访问: https://dotnet.microsoft.com/download
-- 下载并安装 .NET 9.0 SDK 或 Runtime
-
-## 📄 许可证
-
-本项目使用 AssemblyAI API，需要遵守其服务条款。
-
-## 🎉 开始使用
-
-```bash
-# 1. 克隆或下载项目
-# 2. 进入目录
-cd WhisperApp.Avalona
-
-# 3. 运行
-dotnet run
-
-# 4. 输入 API 密钥并开始转录！
-```
-
-## 🔗 相关链接
-
-- [AssemblyAI 文档](https://www.assemblyai.com/docs)
-- [Avalonia UI 文档](https://docs.avaloniaui.net/)
-- [.NET 文档](https://docs.microsoft.com/zh-cn/dotnet/)
+# 🎙️ WhisperApp - 音频转录应用
+
+[![构建状态](https://github.com/your-username/WhisperApp.Avalona/actions/workflows/build-release.yml/badge.svg)](https://github.com/your-username/WhisperApp.Avalona/actions)
+[![最新版本](https://img.shields.io/github/v/release/your-username/WhisperApp.Avalona)](https://github.com/your-username/WhisperApp.Avalona/releases)
+[![下载次数](https://img.shields.io/github/downloads/your-username/WhisperApp.Avalona/total)](https://github.com/your-username/WhisperApp.Avalona/releases)
+[![支持平台](https://img.shields.io/badge/平台-Windows%20%7C%20macOS%20%7C%20Linux-blue)](#下载)
+[![.NET 版本](https://img.shields.io/badge/.NET-9.0-512BD4)](https://dotnet.microsoft.com/)
+
+> 基于 Avalonia UI 的跨平台音频转录应用
+
+<p align="center">
+  <a href="#english">English</a> •
+  <a href="#chinese">中文</a>
+</p>
 
 ---
 
-**跨平台 | 开源 | 现代化**
+## ✨ 特性
 
-🎊 现在您可以在任何操作系统上使用音频转录应用了！
+- 🎙️ **音频文件转录** - 将音频文件转换为文本
+- 🖥️ **跨平台支持** - Windows、macOS 和 Linux
+- 🚀 **自动构建发布** - GitHub Actions 自动化 CI/CD
+- 📦 **开箱即用** - 无需额外配置
+- 🎨 **现代界面** - 基于 Avalonia UI 框架构建
 
+## 📥 下载
+
+前往 [Releases](https://github.com/your-username/WhisperApp.Avalona/releases) 页面下载最新版本：
+
+| 平台 | 下载 |
+|------|------|
+| 🪟 Windows (x64) | [WhisperApp-Windows-x64.zip](https://github.com/your-username/WhisperApp.Avalona/releases/latest) |
+| 🍎 macOS (Apple Silicon) | [WhisperApp-macOS-AppleSilicon.zip](https://github.com/your-username/WhisperApp.Avalona/releases/latest) |
+| 🍎 macOS (Intel) | [WhisperApp-macOS-Intel.zip](https://github.com/your-username/WhisperApp.Avalona/releases/latest) |
+| 🐧 Linux (x64) | [WhisperApp-Linux-x64.tar.gz](https://github.com/your-username/WhisperApp.Avalona/releases/latest) |
+
+## 🚀 快速开始
+
+### Windows
+1. 下载并解压 `WhisperApp-Windows-x64.zip`
+2. 双击 `WhisperApp.Avalonia.exe` 运行
+
+### macOS
+1. 下载并解压对应版本的 zip 文件
+2. 双击 `.app` 文件运行
+3. 如遇安全提示，右键点击选择"打开"
+
+### Linux
+```bash
+tar -xzf WhisperApp-Linux-x64.tar.gz
+cd WhisperApp-Linux-x64
+./run.sh
+```
+
+## 🛠️ 开发
+
+### 环境要求
+- .NET 9.0 SDK
+- Windows / macOS / Linux
+
+### 本地运行
+```bash
+git clone https://github.com/your-username/WhisperApp.Avalona.git
+cd WhisperApp.Avalona
+dotnet run
+```
+
+### 本地打包
+
+#### Windows
+```cmd
+build-windows.bat
+```
+
+#### macOS
+```bash
+chmod +x build-macos.sh
+./build-macos.sh
+```
+
+#### Linux
+```bash
+chmod +x build-linux.sh
+./build-linux.sh
+```
+
+## 📚 文档
+
+- [快速开始](快速开始.md)
+- [macOS 打包指南](MACOS_打包指南.md)
+- [GitHub Actions 自动打包](GITHUB_ACTIONS_快速指南.md)
+- [更新日志](CHANGELOG.md)
+- [故障排除](GITHUB_ACTIONS_故障排除.md)
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
+### 如何贡献
+1. Fork 本仓库
+2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 创建 Pull Request
+
+## 📄 许可证
+
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+
+## 🙏 致谢
+
+- [Avalonia UI](https://avaloniaui.net/) - 跨平台 UI 框架
+- [.NET](https://dotnet.microsoft.com/) - 开发平台
+- [GitHub Actions](https://github.com/features/actions) - CI/CD 自动化
+
+## 📊 项目状态
+
+![GitHub last commit](https://img.shields.io/github/last-commit/your-username/WhisperApp.Avalona)
+![GitHub code size](https://img.shields.io/github/languages/code-size/your-username/WhisperApp.Avalona)
+![GitHub issues](https://img.shields.io/github/issues/your-username/WhisperApp.Avalona)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/your-username/WhisperApp.Avalona)
+
+---
+
+## 🔄 语言切换
+
+### English
+This README is in Chinese. For English documentation, please see [README.md](README.md).
+
+### 中文（当前）
+此 README 为中文版本。英文文档请查看 [README.md](README.md)。
+
+---
+
+**⭐ 如果这个项目对你有帮助，请给个星标！**
+
+---
+
+<div align="center">
+  <sub>使用 Avalonia UI 和 .NET 构建 ❤️</sub>
+</div>
