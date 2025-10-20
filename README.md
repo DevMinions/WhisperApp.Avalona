@@ -9,8 +9,8 @@
 > Cross-platform audio transcription application built with Avalonia UI
 
 <p align="center">
-  <a href="#english">English</a> •
-  <a href="#chinese">中文</a>
+  <a href="README_CN.md">中文</a> •
+  <a href="README.md">English</a>
 </p>
 
 ---

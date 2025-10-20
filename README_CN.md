@@ -9,8 +9,8 @@
 > 基于 Avalonia UI 的跨平台音频转录应用
 
 <p align="center">
-  <a href="#english">English</a> •
-  <a href="#chinese">中文</a>
+  <a href="README.md">English</a> •
+  <a href="README_CN.md">中文</a>
 </p>
 
 ---
