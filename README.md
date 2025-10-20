@@ -1,8 +1,8 @@
 # 🎙️ WhisperApp - Audio Transcription Application
 
-[![Build Status](https://github.com/your-username/WhisperApp.Avalona/actions/workflows/build-release.yml/badge.svg)](https://github.com/your-username/WhisperApp.Avalona/actions)
-[![Latest Release](https://img.shields.io/github/v/release/your-username/WhisperApp.Avalona)](https://github.com/your-username/WhisperApp.Avalona/releases)
-[![Downloads](https://img.shields.io/github/downloads/your-username/WhisperApp.Avalona/total)](https://github.com/your-username/WhisperApp.Avalona/releases)
+[![Build Status](https://github.com/DevMinions/WhisperApp.Avalona/actions/workflows/build-release.yml/badge.svg)](https://github.com/DevMinions/WhisperApp.Avalona/actions)
+[![Latest Release](https://img.shields.io/github/v/release/DevMinions/WhisperApp.Avalona)](https://github.com/DevMinions/WhisperApp.Avalona/releases)
+[![Downloads](https://img.shields.io/github/downloads/DevMinions/WhisperApp.Avalona/total)](https://github.com/DevMinions/WhisperApp.Avalona/releases)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-blue)](#download)
 [![.NET](https://img.shields.io/badge/.NET-9.0-512BD4)](https://dotnet.microsoft.com/)
 
@@ -25,14 +25,14 @@
 
 ## 📥 Download
 
-Visit [Releases](https://github.com/your-username/WhisperApp.Avalona/releases) page to download the latest version:
+Visit [Releases](https://github.com/DevMinions/WhisperApp.Avalona/releases) page to download the latest version:
 
 | Platform | Download |
 |----------|---------|
-| 🪟 Windows (x64) | [WhisperApp-Windows-x64.zip](https://github.com/your-username/WhisperApp.Avalona/releases/latest) |
-| 🍎 macOS (Apple Silicon) | [WhisperApp-macOS-AppleSilicon.zip](https://github.com/your-username/WhisperApp.Avalona/releases/latest) |
-| 🍎 macOS (Intel) | [WhisperApp-macOS-Intel.zip](https://github.com/your-username/WhisperApp.Avalona/releases/latest) |
-| 🐧 Linux (x64) | [WhisperApp-Linux-x64.tar.gz](https://github.com/your-username/WhisperApp.Avalona/releases/latest) |
+| 🪟 Windows (x64) | [WhisperApp-Windows-x64.zip](https://github.com/DevMinions/WhisperApp.Avalona/releases/latest) |
+| 🍎 macOS (Apple Silicon) | [WhisperApp-macOS-AppleSilicon.zip](https://github.com/DevMinions/WhisperApp.Avalona/releases/latest) |
+| 🍎 macOS (Intel) | [WhisperApp-macOS-Intel.zip](https://github.com/DevMinions/WhisperApp.Avalona/releases/latest) |
+| 🐧 Linux (x64) | [WhisperApp-Linux-x64.tar.gz](https://github.com/DevMinions/WhisperApp.Avalona/releases/latest) |
 
 ## 🚀 Quick Start
 
@@ -60,7 +60,7 @@ cd WhisperApp-Linux-x64
 
 ### Local Development
 ```bash
-git clone https://github.com/your-username/WhisperApp.Avalona.git
+git clone https://github.com/DevMinions/WhisperApp.Avalona.git
 cd WhisperApp.Avalona
 dotnet run
 ```
@@ -115,10 +115,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📊 Project Status
 
-![GitHub last commit](https://img.shields.io/github/last-commit/your-username/WhisperApp.Avalona)
-![GitHub code size](https://img.shields.io/github/languages/code-size/your-username/WhisperApp.Avalona)
-![GitHub issues](https://img.shields.io/github/issues/your-username/WhisperApp.Avalona)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/your-username/WhisperApp.Avalona)
+![GitHub last commit](https://img.shields.io/github/last-commit/DevMinions/WhisperApp.Avalona)
+![GitHub code size](https://img.shields.io/github/languages/code-size/DevMinions/WhisperApp.Avalona)
+![GitHub issues](https://img.shields.io/github/issues/DevMinions/WhisperApp.Avalona)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/DevMinions/WhisperApp.Avalona)
 
 ---
 

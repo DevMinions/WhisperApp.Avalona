@@ -1,16 +1,16 @@
 # 🎙️ WhisperApp - 音频转录应用
 
-[![构建状态](https://github.com/your-username/WhisperApp.Avalona/actions/workflows/build-release.yml/badge.svg)](https://github.com/your-username/WhisperApp.Avalona/actions)
-[![最新版本](https://img.shields.io/github/v/release/your-username/WhisperApp.Avalona)](https://github.com/your-username/WhisperApp.Avalona/releases)
-[![下载次数](https://img.shields.io/github/downloads/your-username/WhisperApp.Avalona/total)](https://github.com/your-username/WhisperApp.Avalona/releases)
+[![构建状态](https://github.com/DevMinions/WhisperApp.Avalona/actions/workflows/build-release.yml/badge.svg)](https://github.com/DevMinions/WhisperApp.Avalona/actions)
+[![最新版本](https://img.shields.io/github/v/release/DevMinions/WhisperApp.Avalona)](https://github.com/DevMinions/WhisperApp.Avalona/releases)
+[![下载次数](https://img.shields.io/github/downloads/DevMinions/WhisperApp.Avalona/total)](https://github.com/DevMinions/WhisperApp.Avalona/releases)
 [![支持平台](https://img.shields.io/badge/平台-Windows%20%7C%20macOS%20%7C%20Linux-blue)](#下载)
 [![.NET 版本](https://img.shields.io/badge/.NET-9.0-512BD4)](https://dotnet.microsoft.com/)
 
 > 基于 Avalonia UI 的跨平台音频转录应用
 
 <p align="center">
-  <a href="README.md">English</a> •
-  <a href="README_CN.md">中文</a>
+  <a href="#english">English</a> •
+  <a href="#chinese">中文</a>
 </p>
 
 ---
@@ -25,14 +25,14 @@
 
 ## 📥 下载
 
-前往 [Releases](https://github.com/your-username/WhisperApp.Avalona/releases) 页面下载最新版本：
+前往 [Releases](https://github.com/DevMinions/WhisperApp.Avalona/releases) 页面下载最新版本：
 
 | 平台 | 下载 |
 |------|------|
-| 🪟 Windows (x64) | [WhisperApp-Windows-x64.zip](https://github.com/your-username/WhisperApp.Avalona/releases/latest) |
-| 🍎 macOS (Apple Silicon) | [WhisperApp-macOS-AppleSilicon.zip](https://github.com/your-username/WhisperApp.Avalona/releases/latest) |
-| 🍎 macOS (Intel) | [WhisperApp-macOS-Intel.zip](https://github.com/your-username/WhisperApp.Avalona/releases/latest) |
-| 🐧 Linux (x64) | [WhisperApp-Linux-x64.tar.gz](https://github.com/your-username/WhisperApp.Avalona/releases/latest) |
+| 🪟 Windows (x64) | [WhisperApp-Windows-x64.zip](https://github.com/DevMinions/WhisperApp.Avalona/releases/latest) |
+| 🍎 macOS (Apple Silicon) | [WhisperApp-macOS-AppleSilicon.zip](https://github.com/DevMinions/WhisperApp.Avalona/releases/latest) |
+| 🍎 macOS (Intel) | [WhisperApp-macOS-Intel.zip](https://github.com/DevMinions/WhisperApp.Avalona/releases/latest) |
+| 🐧 Linux (x64) | [WhisperApp-Linux-x64.tar.gz](https://github.com/DevMinions/WhisperApp.Avalona/releases/latest) |
 
 ## 🚀 快速开始
 
@@ -60,7 +60,7 @@ cd WhisperApp-Linux-x64
 
 ### 本地运行
 ```bash
-git clone https://github.com/your-username/WhisperApp.Avalona.git
+git clone https://github.com/DevMinions/WhisperApp.Avalona.git
 cd WhisperApp.Avalona
 dotnet run
 ```
@@ -115,10 +115,10 @@ chmod +x build-linux.sh
 
 ## 📊 项目状态
 
-![GitHub last commit](https://img.shields.io/github/last-commit/your-username/WhisperApp.Avalona)
-![GitHub code size](https://img.shields.io/github/languages/code-size/your-username/WhisperApp.Avalona)
-![GitHub issues](https://img.shields.io/github/issues/your-username/WhisperApp.Avalona)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/your-username/WhisperApp.Avalona)
+![GitHub last commit](https://img.shields.io/github/last-commit/DevMinions/WhisperApp.Avalona)
+![GitHub code size](https://img.shields.io/github/languages/code-size/DevMinions/WhisperApp.Avalona)
+![GitHub issues](https://img.shields.io/github/issues/DevMinions/WhisperApp.Avalona)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/DevMinions/WhisperApp.Avalona)
 
 ---
 
