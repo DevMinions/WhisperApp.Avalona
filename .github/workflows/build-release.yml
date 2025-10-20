@@ -1,0 +1,288 @@
+name: 🚀 Build and Release
+
+on:
+  # 当推送 tag 时触发（例如：v1.0.0）
+  push:
+    tags:
+      - 'v*'
+  
+  # 允许手动触发
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '版本号（例如：1.0.0）'
+        required: true
+        default: '1.0.0'
+  
+  # PR 时也构建（但不发布）
+  pull_request:
+    branches: [ main, master ]
+
+env:
+  DOTNET_VERSION: '9.0.x'
+  PROJECT_NAME: 'WhisperApp.Avalonia'
+
+jobs:
+  # ====================================
+  # Windows 构建
+  # ====================================
+  build-windows:
+    name: 🪟 Build Windows
+    runs-on: windows-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+    
+    - name: 🔧 Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: 📦 Restore dependencies
+      run: dotnet restore
+    
+    - name: 🏗️ Build Windows (x64)
+      run: dotnet publish -c Release -r win-x64 --self-contained -p:PublishSingleFile=false
+    
+    - name: 📁 Package Windows
+      shell: pwsh
+      run: |
+        $publishDir = "WhisperApp-Windows-x64"
+        New-Item -ItemType Directory -Force -Path $publishDir
+        Copy-Item -Path "bin\Release\net9.0\win-x64\publish\*" -Destination $publishDir -Recurse
+        
+        # 创建启动脚本
+        @"
+        @echo off
+        chcp 65001 >nul
+        echo 正在启动 WhisperApp...
+        start WhisperApp.Avalonia.exe
+        "@ | Out-File -FilePath "$publishDir\运行应用.bat" -Encoding utf8
+        
+        # 创建 ZIP
+        Compress-Archive -Path $publishDir -DestinationPath "WhisperApp-Windows-x64.zip"
+    
+    - name: 📤 Upload Windows artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows-x64
+        path: WhisperApp-Windows-x64.zip
+        retention-days: 5
+
+  # ====================================
+  # macOS 构建
+  # ====================================
+  build-macos:
+    name: 🍎 Build macOS
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        arch: 
+          - { rid: 'osx-arm64', name: 'AppleSilicon' }
+          - { rid: 'osx-x64', name: 'Intel' }
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+    
+    - name: 🔧 Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: 📦 Restore dependencies
+      run: dotnet restore
+    
+    - name: 🏗️ Build macOS (${{ matrix.arch.name }})
+      run: dotnet publish -c Release -r ${{ matrix.arch.rid }} --self-contained -p:PublishSingleFile=false
+    
+    - name: 📱 Create .app bundle
+      run: |
+        APP_NAME="WhisperApp-${{ matrix.arch.name }}.app"
+        
+        # 创建 .app 目录结构
+        mkdir -p "$APP_NAME/Contents/MacOS"
+        mkdir -p "$APP_NAME/Contents/Resources"
+        
+        # 复制发布文件
+        cp -r "bin/Release/net9.0/${{ matrix.arch.rid }}/publish/"* "$APP_NAME/Contents/MacOS/"
+        
+        # 创建 Info.plist
+        cat > "$APP_NAME/Contents/Info.plist" << 'EOF'
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+        <plist version="1.0">
+        <dict>
+            <key>CFBundleName</key>
+            <string>WhisperApp</string>
+            <key>CFBundleDisplayName</key>
+            <string>音频转录</string>
+            <key>CFBundleIdentifier</key>
+            <string>com.whisperapp.avalonia</string>
+            <key>CFBundleVersion</key>
+            <string>1.0.0</string>
+            <key>CFBundleShortVersionString</key>
+            <string>1.0</string>
+            <key>CFBundlePackageType</key>
+            <string>APPL</string>
+            <key>CFBundleExecutable</key>
+            <string>WhisperApp.Avalonia</string>
+            <key>LSMinimumSystemVersion</key>
+            <string>10.15</string>
+            <key>NSHighResolutionCapable</key>
+            <true/>
+        </dict>
+        </plist>
+        EOF
+        
+        # 设置权限
+        chmod +x "$APP_NAME/Contents/MacOS/WhisperApp.Avalonia"
+        
+        # 移除隔离属性
+        xattr -cr "$APP_NAME" || true
+        
+        # 创建 ZIP
+        zip -r "WhisperApp-macOS-${{ matrix.arch.name }}.zip" "$APP_NAME"
+    
+    - name: 📤 Upload macOS artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: macos-${{ matrix.arch.name }}
+        path: WhisperApp-macOS-${{ matrix.arch.name }}.zip
+        retention-days: 5
+
+  # ====================================
+  # Linux 构建
+  # ====================================
+  build-linux:
+    name: 🐧 Build Linux
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+    
+    - name: 🔧 Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: 📦 Restore dependencies
+      run: dotnet restore
+    
+    - name: 🏗️ Build Linux (x64)
+      run: dotnet publish -c Release -r linux-x64 --self-contained -p:PublishSingleFile=false
+    
+    - name: 📁 Package Linux
+      run: |
+        PUBLISH_DIR="WhisperApp-Linux-x64"
+        mkdir -p "$PUBLISH_DIR"
+        
+        # 复制文件
+        cp -r bin/Release/net9.0/linux-x64/publish/* "$PUBLISH_DIR/"
+        
+        # 创建启动脚本
+        cat > "$PUBLISH_DIR/run.sh" << 'EOF'
+        #!/bin/bash
+        cd "$(dirname "$0")"
+        ./WhisperApp.Avalonia
+        EOF
+        
+        chmod +x "$PUBLISH_DIR/run.sh"
+        chmod +x "$PUBLISH_DIR/WhisperApp.Avalonia"
+        
+        # 创建 .desktop 文件
+        cat > "$PUBLISH_DIR/whisperapp.desktop" << 'EOF'
+        [Desktop Entry]
+        Version=1.0
+        Type=Application
+        Name=WhisperApp
+        Comment=音频转录应用
+        Exec=./run.sh
+        Icon=audio-x-generic
+        Terminal=false
+        Categories=AudioVideo;Audio;
+        EOF
+        
+        # 创建 tar.gz
+        tar -czf WhisperApp-Linux-x64.tar.gz "$PUBLISH_DIR"
+    
+    - name: 📤 Upload Linux artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: linux-x64
+        path: WhisperApp-Linux-x64.tar.gz
+        retention-days: 5
+
+  # ====================================
+  # 创建 Release
+  # ====================================
+  create-release:
+    name: 📦 Create Release
+    needs: [build-windows, build-macos, build-linux]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+    
+    steps:
+    - name: 📥 Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+    
+    - name: 📋 List artifacts
+      run: ls -R artifacts/
+    
+    - name: 🏷️ Get version
+      id: version
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+        else
+          echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: 🎉 Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ steps.version.outputs.version }}
+        name: WhisperApp v${{ steps.version.outputs.version }}
+        body: |
+          ## 🎉 WhisperApp Avalonia v${{ steps.version.outputs.version }}
+          
+          ### 📥 下载说明
+          
+          #### 🪟 Windows
+          - 下载 `WhisperApp-Windows-x64.zip`
+          - 解压后双击 `WhisperApp.Avalonia.exe` 运行
+          
+          #### 🍎 macOS
+          - **Apple Silicon (M1/M2/M3)**: 下载 `WhisperApp-macOS-AppleSilicon.zip`
+          - **Intel**: 下载 `WhisperApp-macOS-Intel.zip`
+          - 解压后双击 `.app` 文件运行
+          - 如果提示安全警告，右键点击选择"打开"或运行: `xattr -cr WhisperApp-*.app`
+          
+          #### 🐧 Linux
+          - 下载 `WhisperApp-Linux-x64.tar.gz`
+          - 解压: `tar -xzf WhisperApp-Linux-x64.tar.gz`
+          - 运行: `./WhisperApp-Linux-x64/run.sh`
+          
+          ### ✨ 更新内容
+          - Avalonia 跨平台 UI 框架
+          - 支持 Windows、macOS、Linux
+          - 音频转录功能
+          
+          ### 📝 注意事项
+          - macOS 版本未签名，首次运行需要允许安全权限
+          - Linux 版本需要安装相关依赖（X11、libfontconfig 等）
+          
+        files: |
+          artifacts/windows-x64/WhisperApp-Windows-x64.zip
+          artifacts/macos-AppleSilicon/WhisperApp-macOS-AppleSilicon.zip
+          artifacts/macos-Intel/WhisperApp-macOS-Intel.zip
+          artifacts/linux-x64/WhisperApp-Linux-x64.tar.gz
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
