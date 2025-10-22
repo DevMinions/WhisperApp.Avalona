@@ -144,11 +144,14 @@ jobs:
         # 设置权限
         chmod +x "$APP_NAME/Contents/MacOS/WhisperApp.Avalonia"
         
-        # 移除隔离属性
+        # 移除隔离属性（允许运行未签名应用）
         xattr -cr "$APP_NAME" || true
         
         # 创建 ZIP
         zip -r "WhisperApp-macOS-${{ matrix.arch.name }}.zip" "$APP_NAME"
+        
+        # 再次移除 ZIP 文件的隔离属性
+        xattr -cr "WhisperApp-macOS-${{ matrix.arch.name }}.zip" || true
     
     - name: 📤 Upload macOS artifact
       uses: actions/upload-artifact@v4

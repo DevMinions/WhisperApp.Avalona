@@ -43,7 +43,7 @@ Visit [Releases](https://github.com/DevMinions/WhisperApp.Avalona/releases) page
 ### macOS
 1. Download and extract the appropriate zip file for your Mac
 2. Double-click the `.app` file to run
-3. If you see a security warning, right-click and select "Open"
+3. **If you see a security warning**: Right-click the app and select "Open", or run: `xattr -cr WhisperApp-*.app`
 
 ### Linux
 ```bash
